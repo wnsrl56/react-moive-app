@@ -1,6 +1,7 @@
 import './App.css';
 import React, { Component } from 'react';
 import Movie, { MovieItem } from './Movie';
+import LoadingMask from './LoadingMask';
 import { Indexable } from './commonInterface';
 
 class App extends Component {
@@ -8,11 +9,24 @@ class App extends Component {
 
   _renderMovies = (list: MovieItem[]) => {
     return list.map((v: MovieItem) => {
-      const { title, medium_cover_image, id } = v;
+      const { title, medium_cover_image, genres, synopsis, id } = v;
       return (
-        <Movie title={title} medium_cover_image={medium_cover_image} key={id} />
+        <Movie
+          title={title}
+          poster={medium_cover_image}
+          genres={genres}
+          key={id}
+          synopsis={synopsis}
+        />
       );
     });
+  };
+  _renderLoading = () => {
+    return (
+      <div className="Viewport">
+        <LoadingMask />
+      </div>
+    );
   };
   componentDidMount() {
     this._getMovies();
@@ -35,7 +49,7 @@ class App extends Component {
     const { movies } = this.state;
     return (
       <div className="App">
-        {movies ? this._renderMovies(movies) : 'Loadings'}
+        {movies ? this._renderMovies(movies) : this._renderLoading()}
       </div>
     );
   }

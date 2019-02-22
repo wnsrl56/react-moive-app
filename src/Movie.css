@@ -1,4 +1,16 @@
-.image-size {
-  width: 500px;
-  height: 500px;
+.Movie {
+  flex: 1 0 45%;
+  margin: 10px;
+  height: 100%;
+  flex-direction: column;
+}
+.Movie_Poster {
+}
+.Movie_Columns {
+  flex-direction: row;
+}
+
+.Movie_Genres {
+}
+.Movie_Genre {
 }
