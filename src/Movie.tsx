@@ -10,7 +10,7 @@ export interface MovieItem extends Indexable {
   synopsis?: string;
 }
 
-class Movie extends Component<MovieItem, object> {
+class Movie extends Component<MovieItem> {
   render() {
     const { title, poster, genres, synopsis } = this.props;
     return (
@@ -36,20 +36,13 @@ class Movie extends Component<MovieItem, object> {
   }
 }
 
-function MoviePoster(poster: any, alt: any) {
-  const { poster: posterUrl, alt: altText } = poster;
-  return (
-    <img
-      src={posterUrl}
-      alt={altText}
-      title={altText}
-      className="Movie_Poster"
-    />
-  );
+function MoviePoster(props: Indexable) {
+  const { poster, alt } = props;
+  return <img src={poster} alt={alt} title={alt} className="Movie_Poster" />;
 }
 
-function MovieGenre(genre: any) {
-  const { genre: genreText } = genre;
-  return <span className="Movie_Genre">{genreText}</span>;
+function MovieGenre(props: Indexable) {
+  const { genre } = props;
+  return <span className="Movie_Genre">{genre}</span>;
 }
 export default Movie;
