@@ -14,7 +14,7 @@ class App extends Component<{}, IAppState> {
       movies: []
     };
   }
-  _renderMovies = (list: IMovieItem[]) => {
+  private _renderMovies = (list: IMovieItem[]) => {
     return list.map((v: IMovieItem) => {
       const { title, medium_cover_image: poster, genres, synopsis, id } = v;
       return (
@@ -29,7 +29,7 @@ class App extends Component<{}, IAppState> {
     });
   };
 
-  _renderLoading = () => {
+  private _renderLoading = () => {
     return (
       <div className="Viewport">
         <LoadingMask />
@@ -41,12 +41,12 @@ class App extends Component<{}, IAppState> {
     this._getMovies();
   }
 
-  _getMovies = async () => {
+  private _getMovies = async () => {
     const movies = await this._callApi();
     this.setState({ movies });
   };
 
-  _callApi = () => {
+  private _callApi = () => {
     return fetch(
       'https://yts.am/api/v2/list_movies.json?sort_by=download_count'
     )
