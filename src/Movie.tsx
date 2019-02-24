@@ -2,15 +2,24 @@ import React, { Component } from 'react';
 import { Indexable } from './commonInterface';
 import './Movie.css';
 
-export interface MovieItem extends Indexable {
+export interface IMovieItem extends Indexable {
   title: string;
   poster: string;
   id?: number;
-  genres?: string[];
+  genres: string[];
   synopsis?: string;
 }
 
-class Movie extends Component<MovieItem> {
+export interface IMoviePoster {
+  poster: string;
+  alt: string;
+}
+
+export interface IMovieGenre {
+  genre: string;
+}
+
+class Movie extends Component<IMovieItem> {
   render() {
     const { title, poster, genres, synopsis } = this.props;
     return (
@@ -22,13 +31,11 @@ class Movie extends Component<MovieItem> {
           <div className="Movie_Columns">
             <h1> {title} </h1>
             <div className="Movie_Genres">
-              {genres
-                ? genres.map((genre, index) => (
-                    <MovieGenre genre={genre} key={index} />
-                  ))
-                : ''}
+              {genres.map((genre, index) => (
+                <MovieGenre genre={genre} key={index} />
+              ))}
             </div>
-            <p className="Movie_Synopsis">{synopsis}</p>
+            <p>{synopsis}</p>
           </div>
         </div>
       </div>
@@ -36,12 +43,12 @@ class Movie extends Component<MovieItem> {
   }
 }
 
-function MoviePoster(props: Indexable) {
+function MoviePoster(props: IMoviePoster) {
   const { poster, alt } = props;
   return <img src={poster} alt={alt} title={alt} className="Movie_Poster" />;
 }
 
-function MovieGenre(props: Indexable) {
+function MovieGenre(props: IMovieGenre) {
   const { genre } = props;
   return <span className="Movie_Genre">{genre}</span>;
 }

@@ -1,19 +1,26 @@
 import './App.css';
 import React, { Component } from 'react';
-import Movie, { MovieItem } from './Movie';
+import Movie, { IMovieItem } from './Movie';
 import LoadingMask from './LoadingMask';
-import { Indexable } from './commonInterface';
 
-class App extends Component {
-  state: Indexable = {};
+interface IAppState {
+  movies: IMovieItem[];
+}
 
-  _renderMovies = (list: MovieItem[]) => {
-    return list.map((v: MovieItem) => {
-      const { title, medium_cover_image, genres, synopsis, id } = v;
+class App extends Component<{}, IAppState> {
+  constructor(props: {}) {
+    super(props);
+    this.state = {
+      movies: []
+    };
+  }
+  _renderMovies = (list: IMovieItem[]) => {
+    return list.map((v: IMovieItem) => {
+      const { title, medium_cover_image: poster, genres, synopsis, id } = v;
       return (
         <Movie
           title={title}
-          poster={medium_cover_image}
+          poster={poster}
           genres={genres}
           key={id}
           synopsis={synopsis}
@@ -21,6 +28,7 @@ class App extends Component {
       );
     });
   };
+
   _renderLoading = () => {
     return (
       <div className="Viewport">
@@ -28,6 +36,7 @@ class App extends Component {
       </div>
     );
   };
+
   componentDidMount() {
     this._getMovies();
   }
@@ -36,6 +45,7 @@ class App extends Component {
     const movies = await this._callApi();
     this.setState({ movies });
   };
+
   _callApi = () => {
     return fetch(
       'https://yts.am/api/v2/list_movies.json?sort_by=download_count'
